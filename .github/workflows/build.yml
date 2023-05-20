@@ -11,26 +11,35 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: main
 
-      - name: Download SuperCollider Code
+      - name: Checkout SuperCollider Code
         uses: actions/checkout@v3
         with:
           repository: supercollider/supercollider
-          path: sc
+          path: supercollider
 
-      - name: Compile
+      - name: Make build dir
+        working-directory: main
+        run: mkdir build
+
+      - name: cmake
+        working-directory: main/build
         run: |
-          mkdir build
-          cd build
           cmake \
-            -DSC_PATH=${{ env.github.workspace }}/sc \
+            -DSC_PATH=../supercollider \
             -DCMAKE_BUILD_TYPE=RELEASE \
             ..
-          make
+      
+      - name: make
+        working-directory: main/build
+        run: make
 
       - name: Upload linux build
         uses: actions/upload-artifact@v3
         with:
           name: build-linux
-          path: build/AbsRatio.so
+          path: main/build/AbsRatio.so

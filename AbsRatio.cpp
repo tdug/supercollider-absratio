@@ -16,12 +16,12 @@ struct AbsRatio : public SCUnit {
             float* outbuf = out(0);
 
             for (int i = 0; i < inNumSamples; i++) {
-                outbuf[i] = (x > y) ? (y/x) : (x/y);
+                outbuf[i] = (x>y) ? (y/x) : (x/y);
             }
         }
 }
 
-PluginLoad(AbsRatio) {
+PluginLoad(AbsRatioUGens) {
     ft = inTable;
-    registerUnit<AbsRatio>(ft, "AbsRatio")
+    registerUnit<AbsRatio>(ft, "AbsRatio");
 }
