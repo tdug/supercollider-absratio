@@ -47,6 +47,7 @@ jobs:
           
   release:
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
     needs:
       - build-linux
     
@@ -62,6 +63,5 @@ jobs:
       
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: AbsRatio.so
