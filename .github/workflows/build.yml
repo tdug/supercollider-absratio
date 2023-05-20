@@ -43,7 +43,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: actions/upload-artifact@v3
         with:
-          name: build-linux
+          name: linux-build
           path: main/build/AbsRatio.so
           
   release:
@@ -57,9 +57,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Download linux build
-        uses: actions/upload-artifact@v3
+        uses: actions/download-artifact@v3
         with:
-          name: build-linux
+          name: linux-build
           path: AbsRatio.so
       
       - name: Release
