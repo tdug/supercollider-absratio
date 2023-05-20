@@ -1,0 +1,36 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download SuperCollider Code
+        uses: actions/checkout@v3
+        with:
+          repository: https://github.com/supercollider/supercollider.git
+          path: sc
+
+      - name: Compile
+        run: |
+          mkdir build
+          cd build
+          cmake \
+            -DSC_PATH=${{ env.github.workspace }}/sc \
+            -DCMAKE_BUILD_TYPE=RELEASE \
+            ..
+          make
+
+      - name: Upload linux build
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-linux
+          path: build/AbsRatio.so
