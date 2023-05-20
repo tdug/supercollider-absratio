@@ -16,7 +16,7 @@ jobs:
       - name: Download SuperCollider Code
         uses: actions/checkout@v3
         with:
-          repository: https://github.com/supercollider/supercollider.git
+          repository: supercollider/supercollider
           path: sc
 
       - name: Compile
