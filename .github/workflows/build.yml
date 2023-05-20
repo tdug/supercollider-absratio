@@ -61,8 +61,12 @@ jobs:
         with:
           name: linux-build
           path: AbsRatio.so
+
+      - name: List directory
+        run: ls
       
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: AbsRatio.so
+          files: |
+            AbsRatio.so
