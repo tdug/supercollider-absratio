@@ -1,6 +1,6 @@
 (
     name: "AbsRatio",
-    description: "Helpers for a function I call absolute ratio, which is `(x) => x > 1 ? (1/x) : x`",
+    description: "Helpers for a function called absolute ratio, which is `(x,y) => x > y ? (y/x) : (x/y)`",
     version: "0.0.1",
     author: "tdug",
     license: "GPL"

@@ -1,3 +1,3 @@
 + UGen {
-    absRatio { |other| ^AbsRatio(this, other) }
+    absRatio { |other=1.0| ^AbsRatio(this, other) }
 }
