@@ -3,7 +3,7 @@ AbsRatio : UGen {
     *ar {|x,y| ^this.multiNew('audio', x, y) }
 }
 
-SimpleNumber : {
+SimpleNumber {
     .absRatio { |other| ^(this > other).if({other / this}, {this / other}) }
 }
 
