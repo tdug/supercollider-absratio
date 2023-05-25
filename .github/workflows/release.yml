@@ -101,7 +101,6 @@ jobs:
 
       - name: Detect Version from Quark File
         id: version
-        working-directory: main
         run: |
           echo "quark-version=$(cat AbsRatio.quark | sed -n "s/^\s*version:\s*\"\(.*\)\"[,?]/\1/p")" >> $GITHUB_OUTPUT
 
