@@ -92,12 +92,12 @@ jobs:
       - name: Download built .so
         uses: actions/download-artifact@v3
         with:
-          name: linux-build
+          name: build-so
 
       - name: Download built .scx
         uses: actions/download-artifact@v3
         with:
-          name: macos-build
+          name: build-scx
 
       - name: Detect Version from Quark File
         id: version
