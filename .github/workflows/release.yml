@@ -5,7 +5,7 @@ on:
 
 jobs:
   quark-version-check:
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     outputs:
       quark-version: ${{ steps.version.quark-version }}
     steps:
@@ -117,9 +117,7 @@ jobs:
       - name: Release
         uses: EndBug/add-and-commit@v9
         with:
-          add:
-            - '*.scx'
-            - '*.so'
+          add: '["*.scx", "*.so"]'
           message: 'Compiled by GitHub Action'
           new_branch: 'release/${{ needs.quark-version-check.outputs.quark-version }}'
           tag: ${{ needs.quark-version-check.outputs.quark-version }}
