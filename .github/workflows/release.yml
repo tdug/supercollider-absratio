@@ -4,6 +4,20 @@ on:
   workflow_dispatch:
 
 jobs:
+  quark-version-check:
+    runs_on: ubuntu-latest
+    outputs:
+      quark-version: ${{ steps.version.quark-version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Detect Version from Quark File
+        id: version
+        working-directory: main
+        run: |
+          echo "quark-version=$(cat AbsRatio.quark | sed -n "s/^\s*version:\s*\"\(.*\)\"[,?]/\1/p")" >> "$GITHUB_OUTPUT"
+
+
   build-linux:
     runs-on: ubuntu-latest
     steps:
@@ -75,3 +89,37 @@ jobs:
         with:
           name: build-scx
           path: main/build/AbsRatio.scx
+
+  release:
+    runs-on: ubuntu-latest
+    needs:
+      - quark-version-check
+      - build-linux
+      - build-macos
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download built .so
+        uses: actions/download-artifact@v3
+        with:
+          name: linux-build
+
+      - name: Download built .scx
+        uses: actions/download-artifact@v3
+        with:
+          name: macos-build
+
+      - name: Release
+        uses: EndBug/add-and-commit@v9
+        with:
+          add:
+            - '*.scx'
+            - '*.so'
+          message: 'Compiled by GitHub Action'
+          new_branch: 'release/${{ needs.quark-version-check.outputs.quark-version }}'
+          tag: ${{ needs.quark-version-check.outputs.quark-version }}
